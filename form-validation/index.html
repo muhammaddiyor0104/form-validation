@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        height: 100vh;
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #333;
+        flex-flow: column;
+      }
+
+      .input_box {
+        width: 330px;
+        position: relative;
+      }
+
+      .input_box input {
+        width: 100%;
+        padding: 10px 90px 10px 10px;
+        outline: none;
+        border-radius: 8px;
+        border: 2px solid #49b5ff;
+        background-color: #555;
+        color: #49b5ff;
+        box-sizing: border-box;
+        font-size: 15px;
+      }
+      .eye {
+        width: 100px;
+        height: 100px;
+        background-color: #fff;
+        border-radius: 50%;
+        position: relative;
+      }
+
+      .eye_box {
+        width: 300px;
+        display: flex;
+        margin-bottom: 30px;
+        justify-content: space-around;
+      }
+
+      .eye span {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background-color: #5fbef9;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .eye span:after {
+        content: "";
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #111;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .submit {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: #9b9b9b;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        outline: none;
+        color: #fff;
+      }
+
+      @keyframes submit {
+        0% {
+        }
+        25% {
+          transform: scale(2);
+        }
+        80% {
+          transform: scale(2) translate(200%, -200%);
+        }
+        90% {
+          transform: scale(2) translate(200%, -200%);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(2) translate(200%, -200%);
+          opacity: 0;
+          display: none;
+        }
+      }
+
+      .error {
+        position: absolute;
+        left: 0;
+        bottom: -25px;
+        color: red;
+        font-family: Consolas;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="eye_box">
+      <div class="eye eye_1"><span></span></div>
+      <div class="eye eye_2"><span></span></div>
+    </div>
+    <div class="input_box">
+      <input type="password" />
+      <button class="submit">
+        <span class="submit-title title">Submit</span>
+        <span class="fa fa-paper-plane plane"></span>
+      </button>
+      <span class="error">Minimum 8 characters</span>
+    </div>
+
+    <script>
+      let input = document.querySelector("input");
+      let button = document.querySelector(".submit");
+      let error = document.querySelector(".error");
+      let plane = document.querySelector(".plane");
+      let eye_1 = document.querySelector(".eye_1");
+      let eye_2 = document.querySelector(".eye_2");
+      input.addEventListener("focus", () => {
+        input.addEventListener("input", () => {
+          let length = input.value.length + -390;
+          eye_1.style.transform = `rotate(${-length}deg)`;
+          eye_2.style.transform = `rotate(${-length}deg)`;
+
+          if ((input.value.length > 8, input.value === "muradov0104")) {
+            button.style.backgroundColor = "#5fbef9";
+            input.style.borderColor = "#5fbef9";
+            error.style.display = "none";
+            button.addEventListener("click", () => {
+              plane.style.animation = "submit 1s linear forwards";
+              setTimeout(() => {
+                location.reload();
+              }, 2000);
+            });
+          }
+        });
+      });
+      input.addEventListener("focusout", () => {
+        eye_1.style.transform = `rotate(0deg)`;
+        eye_2.style.transform = `rotate(0deg)`;
+      });
+
+      button.addEventListener("click", () => {
+        if (input.value.length < 8) {
+          error.style.display = "block";
+          error.innerHTML = "Minimum 8 characters";
+          input.style.borderColor = "red";
+        }
+
+        if (input.value.length > 8 && input.value !== "muradov0104") {
+          error.style.display = "block";
+          error.innerHTML = "Wrong password";
+        }
+      });
+    </script>
+  </body>
+</html>
